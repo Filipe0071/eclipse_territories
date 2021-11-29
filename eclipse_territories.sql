@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `eclipse_territories` (
     `influence` float NOT NULL DEFAULT 0
 );
 
-INSERT INTO `territories` (`zone`, `control`, `influence`) VALUES
+INSERT INTO `eclipse_territories` (`zone`, `control`, `influence`) VALUES
 	('Groove', 'dpls', 100),
 	('ForumDrive', 'dpls', 100),
 	('Rancho', 'dpls', 100);
