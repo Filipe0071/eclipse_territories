@@ -203,39 +203,6 @@ PlayerKilled = function(killer, zone)
     end
 end
 
-Handcuffed = function(target)
-    local _source = source
-    local sourceGang = GetPlayerGang(_source)
-    local targetGang = GetPlayerGang(target)
-    if not sourceGang or not targetGang then
-        return
-    end
-    if sourceGang and PoliceLookup[sourceGang] == true then
-        if targetGang then
-            TriggerClientEvent("eclipse_territories:GotCuffed", target)
-        end
-    end
-end
-
-CuffSuccess = function(zone)
-    local _source = source
-    local sourceGang = GetPlayerGang(_source)
-    if not sourceGang then
-        return
-    end
-    local v = Territories[zone]
-    if not v or type(v) ~= "table" or not v.control or not v.influence then
-        return
-    end
-    if v.control == sourceGang then
-        v.influence = math.max(0, v.influence - 10)
-        TriggerClientEvent("eclipse_territories:Sync", -1, Territories)
-    elseif PoliceLookup and type(PoliceLookup) == "table" and PoliceLookup[v.control] then
-        v.influence = math.min(100, v.influence + 10)
-        TriggerClientEvent("eclipse_territories:Sync", -1, Territories)
-    end
-end
-
 PlayerDropped = function()
     for zone, territory in pairs(Territories) do
         for server_id, gang in pairs(territory.players) do
@@ -250,8 +217,6 @@ end
 Utils.event(1, EnterZone, "eclipse_territories:EnterZone")
 Utils.event(1, LeaveZone, "eclipse_territories:LeaveZone")
 Utils.event(1, PlayerKilled, "eclipse_territories:GotMurdered")
-Utils.event(1, CuffSuccess, "eclipse_territories:CuffSuccess")
-Utils.event(1, Handcuffed, "eclipse_dpls:handcuff")
 Utils.event(1, PlayerDropped, "playerDropped")
 
 Citizen.CreateThread(Init)
