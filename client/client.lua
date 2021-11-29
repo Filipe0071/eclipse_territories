@@ -201,19 +201,8 @@ end
 
 Citizen.CreateThread(Start)
 
-local isCuffed = false
-
-GotCuffed = function()
-    isCuffed = not isCuffed
-    local zone = (isCuffed and GetClosestZone())
-    if zone then
-        TriggerServerEvent("eclipse_territories:CuffSuccess", zone)
-    end
-end
-
 GetPlayerData = function()
     return ESX.GetPlayerData()
 end
 
 Utils.event(1, Sync, "eclipse_territories:Sync")
-Utils.event(1, GotCuffed, "eclipse_territories:GotCuffed")
